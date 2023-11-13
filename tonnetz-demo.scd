@@ -19,7 +19,7 @@ SynthDef(\fmSynthDemo,{ |out=0, freq=100, fmMult=2, aAmt=0.3, fmAmt=1, aAtk=4, a
 	fmEnv = EnvGen.kr(Env.new([0,1,0], fmAtk, fmDec), gate);
 	osc = SinOsc.ar(freq, SinOsc.ar((freq * (fmMult+lfFmVib)), 0, fmAmt), ampEnv * mVol);
 	osc = MoogFF.ar(osc, lpFreq, lpRes);
-	noise = Crackle.ar(LFClipNoise.kr(Rand(2,6))*0.1+1.5, 0.005);
+	noise = Crackle.ar(LFClipNoise.kr(Rand(2,6), 0.1, 1.5), 0.005);
 	sig = osc + noise; // adding noise post filter
 	brownGen = Dbrown(pan-panDev, pan+panDev);
 	trig = Impulse.kr(Rand(0.1, 1.0));
@@ -56,4 +56,3 @@ SynthDef(\fmSynthDemo,{ |out=0, freq=100, fmMult=2, aAmt=0.3, fmAmt=1, aAtk=4, a
 
 // 2. execute this line of code with transform keyword (\p (parallel), \r (relative), \l (leading tone), and \h (home) or any combination of the above), low pass frequency, and LPF resonance
 ~tonnetzPlay.value(\lrlp, 3000, 3);
-
